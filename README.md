@@ -2,6 +2,50 @@
 
 `ergen` is an automated, lightning-fast Go error boilerplate generator. Utilizing Go's standard `go/ast` and `go/parser` engines, `ergen` parses files on/near the cursor, evaluates the parent function's return signature, and auto-injects clean `if err != nil` or `if !ok` blocks.
 
+<p align="center">
+  <svg width="850" height="260" viewBox="0 0 850 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap');
+        .mono-reg {
+          font-family: 'Space Mono', 'Consolas', 'Courier New', monospace;
+          font-weight: 400;
+        }
+        .mono-bold {
+          font-family: 'Space Mono', 'Consolas', 'Courier New', monospace;
+          font-weight: 700;
+        }
+      </style>
+    </defs>
+
+    <!-- Terminal Background Box (Neobrutalist Sharp Styling) -->
+    <rect width="850" height="260" rx="0" fill="#0d1117" stroke="#ffffff" stroke-width="3"/>
+    
+    <!-- Left Side: CLI Invocation Sim -->
+    <text x="50" y="115" fill="#00ADD8" class="mono-bold" font-size="52">ergen</text>
+    <text x="52" y="155" fill="#8b949e" class="mono-reg" font-size="13">$ ergen -file=main.go -line=16</text>
+    <text x="52" y="195" fill="#8b949e" class="mono-reg" font-size="12">&gt; giving your 'i', 'f', 'e', 'r', 'n' keys a break.</text>
+
+    <!-- Right Side: Code Editor Block -->
+    <rect x="445" y="42" width="355" height="178" rx="8" fill="#000000" stroke="#ffffff" stroke-width="2"/>
+    
+    <!-- Editor Header Tag -->
+    <rect x="445" y="42" width="105" height="24" fill="#ffffff" rx="4"/>
+    <text x="455" y="58" fill="#000000" class="mono-bold" font-size="10">SOURCE DIFF</text>
+
+    <!-- Original Line -->
+    <text x="465" y="98" fill="#ffffff" class="mono-reg" font-size="12">file, err := os.Open("config.json")</text>
+
+    <!-- Mutation Highlighting Box -->
+    <rect x="460" y="112" width="325" height="88" fill="#2ea043" fill-opacity="0.12" stroke="#2ea043" stroke-width="1.5" rx="4"/>
+    
+    <!-- Diff Added Lines -->
+    <text x="475" y="132" fill="#56d364" class="mono-bold" font-size="12">+ if err != nil {</text>
+    <text x="475" y="158" fill="#56d364" class="mono-bold" font-size="12">+     return nil, err</text>
+    <text x="475" y="184" fill="#56d364" class="mono-bold" font-size="12">+ }</text>
+  </svg>
+</p>
+
 ## Technical Architecture & Core Features
 
 `ergen` evaluates target contexts using Go's standard library packages (`go/ast`, `go/parser`, `go/token`) in a deterministic pipeline:
