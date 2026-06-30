@@ -1,0 +1,28 @@
+# Binaries and executables
+bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+ergen
+
+# Test binaries
+*.test
+
+# Editor/IDE configurations
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.zed/
+
+# Local custom config overrides (use .errgen.json.example as template)
+.errgen.json
+
+# Operating System files
+.DS_Store
+Thumbs.db

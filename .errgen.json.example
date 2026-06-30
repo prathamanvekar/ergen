@@ -1,0 +1,34 @@
+{
+  "rules": [
+    {
+      "name": "testing_handler",
+      "__comment_1": "Triggers inside unit tests (*testing.T parameter) to call t.Fatalf instead of returning errors.",
+      "outer_has_param_type": "*testing.T",
+      "template": "if err != nil {\n\tt.Fatalf(\"{msg}: %v\", err)\n}"
+    },
+    {
+      "name": "db_transaction_rollback",
+      "__comment_2": "Matches database transaction commits to rollback the transaction on failure.",
+      "rhs_call_prefix": "tx.Commit",
+      "template": "if err != nil {\n\t_ = tx.Rollback()\n\treturn fmt.Errorf(\"{msg}: %w\", err)\n}"
+    },
+    {
+      "name": "zap_logger_log",
+      "__comment_3": "Matches context inside functions that use loggers (e.g. log.Logger, zap.Logger) to print errors.",
+      "outer_has_param_type": "*zap.Logger",
+      "template": "if err != nil {\n\tlogger.Error(\"{msg}\", zap.Error(err))\n\treturn err\n}"
+    },
+    {
+      "name": "logrus_logger_log",
+      "__comment_4": "Matches functions receiving a logrus Entry pointer.",
+      "outer_has_param_type": "*logrus.Entry",
+      "template": "if err != nil {\n\tlog.WithError(err).Error(\"{msg}\")\n\treturn err\n}"
+    },
+    {
+      "name": "http_handler_response",
+      "__comment_5": "Matches web handlers (http.ResponseWriter) to log and write HTTP error response cleanly.",
+      "outer_has_param_type": "http.ResponseWriter",
+      "template": "if err != nil {\n\tlog.Printf(\"{msg}: %v\", err)\n\thttp.Error(w, \"Internal Server Error\", http.StatusInternalServerError)\n\treturn\n}"
+    }
+  ]
+}
